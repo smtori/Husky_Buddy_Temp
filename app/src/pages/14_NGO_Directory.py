@@ -1,7 +1,8 @@
 import streamlit as st
 import requests
-from streamlit_extras.app_logo import add_logo
 from modules.nav import SideBarLinks
+
+st.set_page_config(layout='wide')
 
 # Initialize sidebar
 SideBarLinks()
@@ -58,20 +59,20 @@ try:
             # Create expandable rows for each NGO
             for ngo in filtered_ngos:
                 with st.expander(f"{ngo['Name']} ({ngo['Country']})"):
-                    col1, col2 = st.columns(2)
+                    info_col, contact_col = st.columns(2)
 
-                    with col1:
+                    with info_col:
                         st.write("**Basic Information**")
                         st.write(f"**Country:** {ngo['Country']}")
                         st.write(f"**Founded:** {ngo['Founding_Year']}")
                         st.write(f"**Focus Area:** {ngo['Focus_Area']}")
 
-                    with col2:
+                    with contact_col:
                         st.write("**Contact Information**")
                         st.write(f"**Website:** [{ngo['Website']}]({ngo['Website']})")
 
                     # Add a button to view full profile
-                    if st.button(f"View Full Profile", key=f"view_{ngo['NGO_ID']}"):
+                    if st.button("View Full Profile", key=f"view_{ngo['NGO_ID']}"):
                         st.session_state["selected_ngo_id"] = ngo["NGO_ID"]
                         st.switch_page("pages/16_NGO_Profile.py")
 

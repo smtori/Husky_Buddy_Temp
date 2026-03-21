@@ -1,7 +1,8 @@
 import streamlit as st
 import requests
-from streamlit_extras.app_logo import add_logo
 from modules.nav import SideBarLinks
+
+st.set_page_config(layout='wide')
 
 # Initialize sidebar
 SideBarLinks()
@@ -13,10 +14,8 @@ ngo_id = st.session_state.get("selected_ngo_id")
 
 if ngo_id is None:
     st.error("No NGO selected")
-    st.button(
-        "Return to NGO Directory",
-        on_click=lambda: st.switch_page("pages/14_NGO_Directory.py"),
-    )
+    if st.button("Return to NGO Directory"):
+        st.switch_page("pages/14_NGO_Directory.py")
 else:
     # API endpoint
     API_URL = f"http://web-api:4000/ngo/ngos/{ngo_id}"

@@ -1,7 +1,9 @@
+import datetime
 import streamlit as st
 import requests
-from streamlit_extras.app_logo import add_logo
 from modules.nav import SideBarLinks
+
+st.set_page_config(layout='wide')
 
 # Initialize sidebar
 SideBarLinks()
@@ -54,8 +56,9 @@ with st.form(f"add_ngo_form_{st.session_state.form_key_counter}"):
     # Required fields
     name = st.text_input("Organization Name *")
     country = st.text_input("Country *")
+    current_year = datetime.date.today().year
     founding_year = st.number_input(
-        "Founding Year *", min_value=1800, max_value=2024, value=2024
+        "Founding Year *", min_value=1800, max_value=current_year, value=current_year
     )
     focus_area = st.text_input("Focus Area *")
     website = st.text_input("Website URL *")

@@ -1,120 +1,124 @@
 # Idea borrowed from https://github.com/fsmosca/sample-streamlit-authenticator
 
-# This file has function to add certain functionality to the left side bar of the app
+# This file has functions to add links to the left sidebar based on the user's role.
 
 import streamlit as st
 
 
-#### ------------------------ General ------------------------
-def HomeNav():
+# ---- General ----------------------------------------------------------------
+
+def home_nav():
     st.sidebar.page_link("Home.py", label="Home", icon="🏠")
 
 
-def AboutPageNav():
+def about_page_nav():
     st.sidebar.page_link("pages/30_About.py", label="About", icon="🧠")
 
 
-#### ------------------------ Examples for Role of pol_strat_advisor ------------------------
-def PolStratAdvHomeNav():
+# ---- Role: pol_strat_advisor ------------------------------------------------
+
+def pol_strat_home_nav():
     st.sidebar.page_link(
         "pages/00_Pol_Strat_Home.py", label="Political Strategist Home", icon="👤"
     )
 
 
-def WorldBankVizNav():
+def world_bank_viz_nav():
     st.sidebar.page_link(
         "pages/01_World_Bank_Viz.py", label="World Bank Visualization", icon="🏦"
     )
 
 
-def MapDemoNav():
+def map_demo_nav():
     st.sidebar.page_link("pages/02_Map_Demo.py", label="Map Demonstration", icon="🗺️")
 
 
-## ------------------------ Examples for Role of usaid_worker ------------------------
+# ---- Role: usaid_worker -----------------------------------------------------
 
-def usaidWorkerHomeNav():
+def usaid_worker_home_nav():
     st.sidebar.page_link(
-      "pages/10_USAID_Worker_Home.py", label="USAID Worker Home", icon="🏠"
+        "pages/10_USAID_Worker_Home.py", label="USAID Worker Home", icon="🏠"
     )
 
-def NgoDirectoryNav():
+
+def ngo_directory_nav():
     st.sidebar.page_link("pages/14_NGO_Directory.py", label="NGO Directory", icon="📁")
 
-def AddNgoNav():
+
+def add_ngo_nav():
     st.sidebar.page_link("pages/15_Add_NGO.py", label="Add New NGO", icon="➕")
 
-def ApiTestNav():
-    st.sidebar.page_link("pages/12_API_Test.py", label="Test the API", icon="🛜")
 
-def PredictionNav():
+def prediction_nav():
     st.sidebar.page_link(
         "pages/11_Prediction.py", label="Regression Prediction", icon="📈"
     )
 
-def ClassificationNav():
+
+def api_test_nav():
+    st.sidebar.page_link("pages/12_API_Test.py", label="Test the API", icon="🛜")
+
+
+def classification_nav():
     st.sidebar.page_link(
         "pages/13_Classification.py", label="Classification Demo", icon="🌺"
     )
 
 
+# ---- Role: administrator ----------------------------------------------------
 
-
-
-#### ------------------------ System Admin Role ------------------------
-def AdminPageNav():
+def admin_home_nav():
     st.sidebar.page_link("pages/20_Admin_Home.py", label="System Admin", icon="🖥️")
+
+
+def ml_model_mgmt_nav():
     st.sidebar.page_link(
         "pages/21_ML_Model_Mgmt.py", label="ML Model Management", icon="🏢"
     )
 
 
-# --------------------------------Links Function -----------------------------------------------
+# ---- Sidebar assembly -------------------------------------------------------
+
 def SideBarLinks(show_home=False):
     """
-    This function handles adding links to the sidebar of the app based upon the logged-in user's role, which was put in the streamlit session_state object when logging in.
+    Renders sidebar navigation links based on the logged-in user's role.
+    The role is stored in st.session_state when the user logs in on Home.py.
     """
 
-    # add a logo to the sidebar always
+    # Logo appears at the top of the sidebar on every page
     st.sidebar.image("assets/logo.png", width=150)
 
-    # If there is no logged in user, redirect to the Home (Landing) page
+    # If no one is logged in, send them to the Home (login) page
     if "authenticated" not in st.session_state:
         st.session_state.authenticated = False
         st.switch_page("Home.py")
 
     if show_home:
-        # Show the Home page link (the landing page)
-        HomeNav()
+        home_nav()
 
-    # Show the other page navigators depending on the users' role.
     if st.session_state["authenticated"]:
 
-        # Show World Bank Link and Map Demo Link if the user is a political strategy advisor role.
         if st.session_state["role"] == "pol_strat_advisor":
-            PolStratAdvHomeNav()
-            WorldBankVizNav()
-            MapDemoNav()
+            pol_strat_home_nav()
+            world_bank_viz_nav()
+            map_demo_nav()
 
-        # If the user role is usaid worker, show the Api Testing page
         if st.session_state["role"] == "usaid_worker":
-            usaidWorkerHomeNav()
-            NgoDirectoryNav()
-            AddNgoNav()
-            PredictionNav()
-            ApiTestNav()
-            ClassificationNav()
-            
+            usaid_worker_home_nav()
+            ngo_directory_nav()
+            add_ngo_nav()
+            prediction_nav()
+            api_test_nav()
+            classification_nav()
 
-        # If the user is an administrator, give them access to the administrator pages
         if st.session_state["role"] == "administrator":
-            AdminPageNav()
+            admin_home_nav()
+            ml_model_mgmt_nav()
 
-    # Always show the About page at the bottom of the list of links
-    AboutPageNav()
+    # About link appears at the bottom for all roles
+    about_page_nav()
 
     if st.session_state["authenticated"]:
-        # Always show a logout button if there is a logged in user
         if st.sidebar.button("Logout"):
             del st.session_state["role"]
             del st.session_state["authenticated"]
