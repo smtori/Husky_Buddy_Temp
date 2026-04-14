@@ -189,7 +189,8 @@ CREATE TABLE IF NOT EXISTS meetup (
 );
 -- ==================================================
 -- Add in Northeastern majors for the dropdown
-INSERT INTO majors (major_name) VALUES
+INSERT INTO majors (major_name) 
+VALUES
    ('Africana Studies'),
    ('American Sign Language-English Interpreting'),
    ('Advanced Manufacturing Systems'),
@@ -272,7 +273,8 @@ INSERT INTO majors (major_name) VALUES
    ('Undeclared');
 
 
-INSERT INTO interest_tag (tag_type) VALUES
+INSERT INTO interest_tag (tag_type) 
+VALUES
    ('Sports and Fitness'),
    ('Arts and Creativity'),
    ('Tech'),
@@ -288,17 +290,20 @@ INSERT INTO interest_tag (tag_type) VALUES
 -- =======================================
 -- User Data
 INSERT INTO husky_user(`first_name`, `last_name`, `email`, `year`, `verification_status`)
-VALUES('Brandon', 'Heller', 'he.bra@northeastern.edu','1st', 'verified'),
-  ('Natalie', 'Frost','fro.nat@northeastern.edu', '2nd', 'verified' ),
-  ('Sarah', 'Miller','miller.sa@northeastern.edu','3rd','pending');
+VALUES
+('Brandon', 'Heller', 'he.bra@northeastern.edu','1st', 'verified'),
+('Natalie', 'Frost','fro.nat@northeastern.edu', '2nd', 'verified' ),
+('Sarah', 'Miller','miller.sa@northeastern.edu','3rd','pending');
 
 
 -- Match Data
 INSERT INTO husky_match(`student1_id`,`student2_id`, `status`,`matched_on`)
-VALUES(1,3,'active','2026-02-10');
+VALUES
+(1,3,'active','2026-02-10');
 -- Major Data
 INSERT INTO student_major_tags(`student_id`, `major_id`)
-VALUES(1,26),
+VALUES
+(1,26),
 (1,15),
 (2,56),
 (2,26),
@@ -316,7 +321,8 @@ VALUES(1,1),
 
 
 INSERT INTO campus_spot(`spot_name`,`location`)
-VALUES('Marino Recreation Center','369 Huntington Ave'),
+VALUES
+('Marino Recreation Center','369 Huntington Ave'),
 ('Snell Library','360 Huntington Ave'),
 ('Tatte Bakery','360 Huntington Ave'),
 ('Prudential Center','800 Boylston St'),
