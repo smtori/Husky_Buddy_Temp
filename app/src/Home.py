@@ -78,4 +78,4 @@ if st.button("Act as Johanna Park, Data Analyst",
     st.session_state['authenticated'] = True
     st.session_state['role'] = 'data_analyst'
     st.session_state['first_name'] = 'Johanna'
-    st.switch_page('pages/30_Johanna_Home.py')
+    st.switch_page('pages/40_Johanna_Home.py')
