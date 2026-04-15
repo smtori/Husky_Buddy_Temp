@@ -75,6 +75,12 @@ st.markdown("""
     color: #dc2626;
 }
 
+select {
+    max-width: 42px !important;
+    min-width: 42px !important;
+    padding: 4px 6px !important;
+    font-size: 20px !important;
+}
 
 div.stButton > button {
     border-radius: 14px;
@@ -91,7 +97,8 @@ div.stButton > button:hover {
 
 div[data-testid="stVerticalBlock"] div[data-testid="stVerticalBlockBorderWrapper"] {
     border-radius: 18px;
-    padding: 8px;
+    padding: 32px;
+    border: 2px solid #222;
 }
 
 </style>
@@ -174,6 +181,30 @@ for user in users:
             st.markdown(f"**Student ID:** {uid}")
 
         with top_right:
+            action_key = f"action_{uid}"
+            if action_key not in st.session_state:
+                st.session_state[action_key] = "⋯"
+
+            action = st.selectbox(
+                "",
+                ["⋯", "Remove user"],
+                key=action_key,
+                label_visibility="collapsed"
+            )
+
+            if action == "Remove user":
+                st.warning("Are you sure you want to remove this user? This action cannot be undone.")
+                c_confirm, c_cancel = st.columns([1, 1])
+                with c_confirm:
+                    if st.button("Confirm remove", key=f"confirm_remove_{uid}", use_container_width=True):
+                        requests.delete(f"http://api:4000/users/{uid}")
+                        st.session_state[action_key] = "⋯"
+                        st.rerun()
+                with c_cancel:
+                    if st.button("Cancel", key=f"cancel_remove_{uid}", use_container_width=True):
+                        st.session_state[action_key] = "⋯"
+                        st.rerun()
+
             st.markdown(
                 f"""
                 <div style="display:flex; justify-content:flex-end; margin-top: 8px;">
@@ -195,7 +226,7 @@ for user in users:
 
         st.write("")
 
-        b1, b2, b3, b4 = st.columns(4)
+        b1, b2, b3 = st.columns(3)
 
         with b1:
             if st.button("🚩 Flag", key=f"flag_{uid}", use_container_width=True):
@@ -210,11 +241,6 @@ for user in users:
         with b3:
             if st.button("✅ Verify", key=f"verify_{uid}", use_container_width=True):
                 requests.put(f"http://api:4000/users/{uid}", json={**user, "status": "verified"})
-                st.rerun()
-
-        with b4:
-            if st.button("🗑 Remove", key=f"delete_{uid}", use_container_width=True):
-                requests.delete(f"http://api:4000/users/{uid}")
                 st.rerun()
 
     st.write("")
