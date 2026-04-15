@@ -1,6 +1,7 @@
 USE `husky-buddy-orig`;
 
-INSERT INTO husky_user (student_id, first_name, last_name, email, year, verification_status) VALUES
+INSERT INTO husky_user (student_id, first_name, last_name, email, year, verification_status) 
+VALUES
   (1, 'Aiden', 'Chen', 'che.aid@northeastern.edu', '2nd', 'verified'),
   (2, 'Sophia', 'Patel', 'pat.sop@northeastern.edu', '3rd', 'unverified'),
   (3, 'Liam', 'Rivera', 'riv.lia@northeastern.edu', '4th', 'verified'),
