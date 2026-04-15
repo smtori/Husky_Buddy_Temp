@@ -21,10 +21,9 @@ st.markdown("""
 }
 
 .user-card-box {
-    border: 2px solid #222;
-    border-radius: 18px;
-    padding: 24px;
-    margin-bottom: 14px;
+        border: 2px solid #222;
+        border-radius: 18px;
+        padding: 24px;
     background-color: #f7f7f7;
 }
 
@@ -51,7 +50,7 @@ st.markdown("""
     border-radius: 999px;
     padding: 8px 16px;
     font-weight: 600;
-    font-size: 0.95rem;
+    font-size: 1rem;
     background: white;
     display: inline-block;
 }
@@ -76,17 +75,25 @@ st.markdown("""
     color: #dc2626;
 }
 
+
 div.stButton > button {
     border-radius: 14px;
     height: 46px;
     font-weight: 600;
     border: 1.5px solid #222;
     background: white;
+
 }
 
 div.stButton > button:hover {
     background: #f0f0f0;
 }
+
+div[data-testid="stVerticalBlock"] div[data-testid="stVerticalBlockBorderWrapper"] {
+    border-radius: 18px;
+    padding: 8px;
+}
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -145,67 +152,69 @@ STATUS_ICONS = {
     "suspended": "🚫"
 }
 
-st.write("")
-
 for user in users:
     uid = user["student_id"]
     status = user["status"].lower()
     icon = STATUS_ICONS.get(status, "")
-    year = user.get("year", "")
-    joined = user.get("joined_date", "")
 
-    st.markdown("<div class='user-card-box'>", unsafe_allow_html=True)
+    badge_color = {
+        "verified": "#222",
+        "pending": "#888",
+        "flagged": "#d97706",
+        "suspended": "#dc2626"
+    }.get(status, "#222")
 
-    left, right = st.columns([5, 2])
+    with st.container(border=True):
+        top_left, top_right = st.columns([5, 2])
 
-    with left:
-        st.markdown(f"<div class='user-name'>{user['name']}</div>", unsafe_allow_html=True)
-        st.markdown(f"<div class='user-email'>{user['email']}</div>", unsafe_allow_html=True)
-        st.markdown(f"<div class='user-meta'>{year}</div>", unsafe_allow_html=True)
-        st.markdown(f"<div class='user-meta'><b>Student ID:</b> {uid}</div>", unsafe_allow_html=True)
-        if joined:
-            st.markdown(f"<div class='user-meta'>Joined: {joined}</div>", unsafe_allow_html=True)
+        with top_left:
+            st.markdown(f"### {user['name']}")
+            st.markdown(user["email"])
+            st.markdown(user["year"])
+            st.markdown(f"**Student ID:** {uid}")
 
-    with right:
-        st.markdown(
-            f"<div class='status-badge status-{status}'>{icon} {user['status'].title()}</div>",
-            unsafe_allow_html=True
-        )
-
-    st.markdown("</div>", unsafe_allow_html=True)
-
-    b1, b2, b3, b4 = st.columns(4)
-
-    with b1:
-        if st.button("🚩 Flag", key=f"flag_{uid}", use_container_width=True):
-            requests.put(
-                f"http://api:4000/users/{uid}",
-                json={**user, "status": "flagged"},
-                timeout=5
+        with top_right:
+            st.markdown(
+                f"""
+                <div style="display:flex; justify-content:flex-end; margin-top: 8px;">
+                    <div style="
+                        border: 2px solid {badge_color};
+                        color: {badge_color};
+                        border-radius: 999px;
+                        padding: 8px 18px;
+                        font-weight: 600;
+                        background: white;
+                        display: inline-block;
+                    ">
+                        {icon} {user['status'].title()}
+                    </div>
+                </div>
+                """,
+                unsafe_allow_html=True
             )
-            st.rerun()
 
-    with b2:
-        if st.button("🚫 Suspend", key=f"suspend_{uid}", use_container_width=True):
-            requests.put(
-                f"http://api:4000/users/{uid}",
-                json={**user, "status": "suspended"},
-                timeout=5
-            )
-            st.rerun()
+        st.write("")
 
-    with b3:
-        if st.button("✅ Verify", key=f"verify_{uid}", use_container_width=True):
-            requests.put(
-                f"http://api:4000/users/{uid}",
-                json={**user, "status": "verified"},
-                timeout=5
-            )
-            st.rerun()
+        b1, b2, b3, b4 = st.columns(4)
 
-    with b4:
-        if st.button("🗑 Remove", key=f"delete_{uid}", use_container_width=True):
-            requests.delete(f"http://api:4000/users/{uid}", timeout=5)
-            st.rerun()
+        with b1:
+            if st.button("🚩 Flag", key=f"flag_{uid}", use_container_width=True):
+                requests.put(f"http://api:4000/users/{uid}", json={**user, "status": "flagged"})
+                st.rerun()
+
+        with b2:
+            if st.button("🚫 Suspend", key=f"suspend_{uid}", use_container_width=True):
+                requests.put(f"http://api:4000/users/{uid}", json={**user, "status": "suspended"})
+                st.rerun()
+
+        with b3:
+            if st.button("✅ Verify", key=f"verify_{uid}", use_container_width=True):
+                requests.put(f"http://api:4000/users/{uid}", json={**user, "status": "verified"})
+                st.rerun()
+
+        with b4:
+            if st.button("🗑 Remove", key=f"delete_{uid}", use_container_width=True):
+                requests.delete(f"http://api:4000/users/{uid}")
+                st.rerun()
 
     st.write("")
