@@ -55,7 +55,7 @@ if st.button("Act as Adam Johnson, System Admin",
     logger.info("Logging in as Adam Johnson")
     st.switch_page('pages/00_Admin_Home.py')
 
-if st.button('Act as Brandon Heller, a student-user',
+if st.button('Act as Brandon Heller, a Student User',
              type='primary',
              use_container_width=True):
     st.session_state['authenticated'] = True
@@ -67,7 +67,7 @@ if st.button("Act as Natalie Frost, Student User",
              type='primary',
              use_container_width=True):
     st.session_state['authenticated'] = True
-    st.session_state['role'] = 'student_career'
+    st.session_state['role'] = 'student'
     st.session_state['first_name'] = 'Natalie'
     st.switch_page('pages/20_Natalie_Home.py')
 

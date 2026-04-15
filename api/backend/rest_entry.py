@@ -6,9 +6,13 @@ import logging
 from backend.db_connection import init_app as init_db
 from backend.simple.simple_routes import simple_routes
 from backend.ngos.ngo_routes import ngos
+from backend.users.users_routes import users
 
 
-def create_app():
+def create_app() -> Flask:
+    """
+    handles app creation logic, no modifications necessary excluding blueprint registration
+    """
     app = Flask(__name__)
 
     app.logger.setLevel(logging.DEBUG)
@@ -37,5 +41,6 @@ def create_app():
     app.logger.info("create_app(): registering blueprints")
     app.register_blueprint(simple_routes)
     app.register_blueprint(ngos, url_prefix="/ngo")
+    app.register_blueprint(users)
 
     return app
