@@ -10,6 +10,9 @@ st.set_page_config(page_title="User Account Management", layout="wide")
 SideBarLinks()
 
 st.header("User Account Management")
+if st.button("← Back to Admin Home", type="secondary", use_container_width=False):
+    st.switch_page('pages/00_Admin_Home.py')
+
 st.write(f"### Hi, {st.session_state['first_name']}.")
 
 st.markdown("""
