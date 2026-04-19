@@ -9,8 +9,13 @@ st.set_page_config(page_title='Moderation Log', layout='wide')
 
 SideBarLinks()
 
+
+
 st.header('Moderation Log')
-st.write(f"### Hi, {st.session_state['first_name']}.")
+col1, col2, col3 = st.columns([1, 3, 1])
+with col1:
+    if st.button('← Back to Admin Home', type='secondary', use_container_width=False):
+        st.switch_page('pages/00_Admin_Home.py')
 
 st.markdown(
     """
@@ -123,7 +128,7 @@ st.markdown(
 }
 
 div.stButton > button {
-    border-radius: 999px;
+    border-radius: 14px;
     height: 46px;
     font-weight: 600;
     border: 1.5px solid #222;
@@ -132,11 +137,7 @@ div.stButton > button {
 
 div.stButton > button:hover {
     background: #f0f0f0;
-}
 
-div[data-testid="stVerticalBlock"] div[data-testid="stVerticalBlockBorderWrapper"] {
-    border-radius: 18px;
-    padding: 16px;
 }
 </style>
 """,

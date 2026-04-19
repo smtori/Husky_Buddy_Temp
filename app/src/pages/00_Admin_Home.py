@@ -10,15 +10,7 @@ st.set_page_config(layout='wide')
 SideBarLinks()
 
 st.title(f"Welcome System Admin, {st.session_state['first_name']}.")
-col1, col2, col3 = st.columns([1, 2, 1])
-with col1:
-    if st.button('Back to HuskyBuddy Homepage',
-                 type='secondary',
-                 use_container_width=False):
-        st.switch_page('Home.py')
-
-st.write('### What would you like to do today?')
-
+st.write("What would you like to do today?")
 if st.button('View User Account Management',
              type='primary',
              use_container_width=True):
