@@ -34,7 +34,7 @@ SideBarLinks(show_home=True)
 
 logger.info("Loading the Home page of the app")
 st.title('HuskyBuddy')
-st.write('#### Welcome! which HuskyBuddy user would you like to act as?')
+st.write('#### Welcome! Which HuskyBuddy user would you like to act as?')
 
 # For each of the user personas for which we are implementing
 # functionality, we put a button on the screen that the user
@@ -55,7 +55,7 @@ if st.button("Act as Adam Johnson, System Admin",
     logger.info("Logging in as Adam Johnson")
     st.switch_page('pages/00_Admin_Home.py')
 
-if st.button('Act as Brandon Heller, a Student User',
+if st.button('Act as Brandon Heller, Student User',
              type='primary',
              use_container_width=True):
     st.session_state['authenticated'] = True
