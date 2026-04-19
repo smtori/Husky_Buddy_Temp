@@ -36,22 +36,16 @@ if not st.session_state.show_success_modal:
 
         # ── Basic info ────────────────────────────────────
         st.subheader("Your Information")
-        col1, col2 = st.columns(2)
-        with col1:
-            first_name = st.text_input("First Name *")
-            last_name  = st.text_input("Last Name *")
-        with col2:
-            email = st.text_input("Northeastern Email *", placeholder="abc@northeastern.edu")
+        first_name = st.text_input("First Name *")
+        last_name  = st.text_input("Last Name *")
+
+        email = st.text_input("Northeastern Email *", placeholder="abc@northeastern.edu")
 
         # ── Report Information ────────────────────────────────
         st.subheader("Report Information")
-        col1, col2, col3 = st.columns(3)
-        with col1:
-            reported_name = st.text_input("Reported User's Name *", placeholder="Who are you reporting?")
-        with col2:
-            report_reason = st.text_input("Report Information *", placeholder="Provide incident details?")
-        with col3:
-            incident_date = st.date_input("Date of Incident", value=None)
+        reported_name = st.text_input("Reported User's Name *", placeholder="Who are you reporting?")
+        report_reason = st.text_input("Report Information *", placeholder="Provide incident details?")
+        incident_date = st.date_input("Date of Incident", value=None)
 
         submitted = st.form_submit_button("Submit Report", use_container_width=True)
 
