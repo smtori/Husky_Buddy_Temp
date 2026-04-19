@@ -39,21 +39,28 @@ st.write('#### Welcome! Which HuskyBuddy user would you like to act as?')
 # For each of the user personas for which we are implementing
 # functionality, we put a button on the screen that the user
 # can click to MIMIC logging in as that mock user.
+with st.containere(border=True):
+    col1, col2 = st.columns([1,3])
+    with col1:
+        st.image("https://freesvg.org/img/man.png", use_container_width=True)
+        # or use a URL: st.image("https://...")
+    with col2:
+        st.markdown("### Adam Johnson")
+        st.markdown("**System Admin**")
+        st.markdown(
+            "Oversees the HuskyBuddy platform, reviews user reports, "
+            "manages accounts, and ensures community guidelines are upheld."
+        )
 
-if st.button("Act as Adam Johnson, System Admin",
-             type='primary',
-             use_container_width=True):
-    # when user clicks the button, they are now considered authenticated
-    st.session_state['authenticated'] = True
-    # we set the role of the current user
-    st.session_state['role'] = 'Admin'
-    # we add the first name of the user (so it can be displayed on
-    # subsequent pages).
-    st.session_state['first_name'] = 'Adam'
-    # finally, we ask streamlit to switch to another page, in this case, the
-    # landing page for this particular user type
-    logger.info("Logging in as Adam Johnson")
-    st.switch_page('pages/00_Admin_Home.py')
+    if st.button("Act as Adam Johnson, System Admin",
+                 type='primary',
+                 use_container_width=True,
+                 key="login_adam"):
+        st.session_state['authenticated'] = True
+        st.session_state['role'] = 'Admin'
+        st.session_state['first_name'] = 'Adam'
+        logger.info("Logging in as Adam Johnson")
+        st.switch_page('pages/00_Admin_Home.py')
 
 if st.button('Act as Brandon Heller, Student User',
              type='primary',
