@@ -1,10 +1,14 @@
 import streamlit as st
 import requests
+from modules.nav import SideBarLinks
+
+# Add sidebar links
+SideBarLinks()
 
 st.set_page_config(layout="wide")
 st.title("HuskyBuddy Chat")
 
-BASE_URL = "http://web-api:4000"
+BASE_URL = "http://web-api:4000/api"
 
 current_user_id = 1 # Brandon's  ID
 
