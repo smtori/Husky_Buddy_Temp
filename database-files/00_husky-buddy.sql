@@ -187,6 +187,17 @@ CREATE TABLE IF NOT EXISTS meetup (
     FOREIGN KEY (match_id) REFERENCES husky_match(match_id) ON DELETE CASCADE,
     FOREIGN KEY (spot_id) REFERENCES campus_spot(spot_id)
 );
+
+CREATE TABLE IF NOT EXISTS chat_message (
+    message_id   INT NOT NULL AUTO_INCREMENT,
+    match_id     INT NOT NULL,
+    sender_id    INT NOT NULL,
+    content      TEXT NOT NULL,
+    sent_at      DATETIME DEFAULT NOW(),
+    PRIMARY KEY (message_id),
+    FOREIGN KEY (match_id)  REFERENCES husky_match(match_id) ON DELETE CASCADE,
+    FOREIGN KEY (sender_id) REFERENCES husky_user(student_id) ON DELETE CASCADE
+);
 -- ==================================================
 -- Add in Northeastern majors for the dropdown
 INSERT INTO majors (major_name) 
