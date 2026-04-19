@@ -39,7 +39,7 @@ st.write('#### Welcome! Which HuskyBuddy user would you like to act as?')
 # For each of the user personas for which we are implementing
 # functionality, we put a button on the screen that the user
 # can click to MIMIC logging in as that mock user.
-with st.containere(border=True):
+with st.container(border=True):
     col1, col2 = st.columns([1,3])
     with col1:
         st.image("https://freesvg.org/img/man.png", use_container_width=True)
