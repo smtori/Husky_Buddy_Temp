@@ -66,7 +66,7 @@ row1_col1, row1_col2 = st.columns(2)
 
 with row1_col1:
     persona_card(
-        image_url="https://freesvg.org/img/man.png",
+        image_url="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnaTX0RRzTfBVN_t3oCUxOFlbGBOGGwWxG0w&s",
         name="Adam Johnson",
         role="System Admin",
         description=(
@@ -82,7 +82,7 @@ with row1_col1:
 
 with row1_col2:
     persona_card(
-        image_url="https://freesvg.org/img/man.png",
+        image_url="https://t4.ftcdn.net/jpg/08/95/54/15/360_F_895541596_gfRZP3Y5xNrC7i2ruskRLwwDhWoFcpq5.jpg",
         name="Brandon Heller",
         role="Student User",
         description=(
@@ -100,7 +100,7 @@ row2_col1, row2_col2 = st.columns(2)
 
 with row2_col1:
     persona_card(
-        image_url="https://freesvg.org/img/1526098537.png",
+        image_url="https://markaylatimer.com/wp-content/uploads/2020/01/young-executive-woman-profile-icon-vector-9692645.jpg",
         name="Natalie Frost",
         role="Student User",
         description=(
@@ -116,7 +116,7 @@ with row2_col1:
 
 with row2_col2:
     persona_card(
-        image_url="https://freesvg.org/img/1526098537.png",
+        image_url="https://markaylatimer.com/wp-content/uploads/2020/01/young-executive-woman-profile-icon-vector-9692645.jpg",
         name="Johanna Park",
         role="Data Analyst",
         description=(
