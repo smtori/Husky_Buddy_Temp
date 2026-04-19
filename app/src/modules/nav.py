@@ -87,6 +87,8 @@ def SideBarLinks(show_home=False):
 
     # Logo appears at the top of the sidebar on every page
     st.sidebar.image("assets/logo.png", width=150)
+    if st.sidebar.button("Go to Home", type="secondary", use_container_width=False):
+        st.switch_page("Home.py")
 
     # If no one is logged in, send them to the Home (login) page
     if "authenticated" not in st.session_state:

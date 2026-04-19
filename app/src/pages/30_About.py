@@ -9,12 +9,9 @@ st.write("# About this App")
 
 st.markdown(
     """
-    This is a demo app for Data and Software in International Government and Politics Dialogue 2025 Project Course.  
-
-    The goal of this demo is to provide information on the tech stack 
-    being used as well as demo some of the features of the various platforms. 
-
-    Stay tuned for more information and features to come!
+    HuskyBuddy is a data-driven matchmaking platform built exclusively for Northeastern University students. 
+    By pairing Huskies based on shared interests, majors, career goals, and more, 
+    HuskyBuddy makes it easy to meet new people, have meaningful conversations, and grow your network.
     """
 )
 
