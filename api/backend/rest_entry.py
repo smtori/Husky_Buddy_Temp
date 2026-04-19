@@ -5,9 +5,10 @@ import logging
 
 from backend.db_connection import init_app as init_db
 from backend.simple.simple_routes import simple_routes
-from api.backend.ngos.matches_routes import ngos
+from backend.matches.matches_routes import matches
 from backend.users.users_routes import users
 from backend.reports.reports_routes import reports
+
 
 
 def create_app() -> Flask:
@@ -41,8 +42,9 @@ def create_app() -> Flask:
     # and give a url prefix to each.
     app.logger.info("create_app(): registering blueprints")
     app.register_blueprint(simple_routes)
-    app.register_blueprint(ngos, url_prefix="/ngo")
+    app.register_blueprint(matches)
     app.register_blueprint(users)
     app.register_blueprint(reports)
+    app.register_blueprint(analytics)
 
     return app
