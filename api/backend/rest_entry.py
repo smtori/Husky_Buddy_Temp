@@ -11,6 +11,8 @@ from backend.reports.reports_routes import reports
 
 
 
+
+
 def create_app() -> Flask:
     """
     handles app creation logic, no modifications necessary excluding blueprint registration
@@ -45,6 +47,6 @@ def create_app() -> Flask:
     app.register_blueprint(matches)
     app.register_blueprint(users)
     app.register_blueprint(reports)
-    app.register_blueprint(analytics)
+
 
     return app
