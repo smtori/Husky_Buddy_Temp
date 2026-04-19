@@ -7,7 +7,7 @@ st.set_page_config(layout='wide')
 # Initialize sidebar
 SideBarLinks()
 
-st.title("NGO Directory")
+st.title("Edit Profile")
 
 # API endpoint
 API_URL = "http://web-api:4000/ngo/ngos"
