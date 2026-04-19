@@ -9,6 +9,8 @@ from backend.matches.matches_routes import matches
 from backend.users.users_routes import users
 from backend.reports.reports_routes import reports
 from backend.chats.chat_routes import chat
+from backend.analytics.analytics_routes import analytics 
+
 
 
 
@@ -48,6 +50,7 @@ def create_app() -> Flask:
     app.register_blueprint(users)
     app.register_blueprint(reports)
     app.register_blueprint(chat)
+    app.register_blueprint(analytics)
 
 
     return app
