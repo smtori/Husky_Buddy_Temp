@@ -154,10 +154,10 @@ if selected_filter != "All":
     users = [u for u in users if u["status"].lower() == selected_filter.lower()]
 
 STATUS_ICONS = {
-    "verified": "✅",
-    "pending": "🕐",
-    "flagged": "🚩",
-    "suspended": "🚫"
+    "verified": "✓",
+    "pending": "◉",
+    "flagged": "⚑",
+    "suspended": "✖"
 }
 
 for user in users:
