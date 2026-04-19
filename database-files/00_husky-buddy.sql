@@ -304,7 +304,8 @@ INSERT INTO husky_user(`first_name`, `last_name`, `email`, `year`, `verification
 VALUES
 ('Brandon', 'Heller', 'he.bra@northeastern.edu','1st', 'verified'),
 ('Natalie', 'Frost','fro.nat@northeastern.edu', '2nd', 'verified' ),
-('Sarah', 'Miller','miller.sa@northeastern.edu','3rd','pending');
+('Sarah', 'Miller','miller.sa@northeastern.edu','3rd','pending'),
+('Ken', 'Carson', 'carson.ken@northeastern.edu', '4th', 'suspended');
 
 
 -- Match Data
