@@ -6,6 +6,9 @@ import streamlit as st
 from modules.nav import SideBarLinks
 import requests
 
+# Add sidebar links
+SideBarLinks()
+
 st.set_page_config(layout="wide")
 
 
