@@ -6,11 +6,7 @@ st.title("HuskyBuddy Chat")
 
 BASE_URL = "http://web-api:4000/api"
 
-current_user_id = st.session_state.get("user_id")
-
-if not current_user_id:
-    st.warning("Please log in first.")
-    st.stop()
+current_user_id = 1 # Brandon's  ID
 
 # Get a random match
 if "match_id" not in st.session_state:
