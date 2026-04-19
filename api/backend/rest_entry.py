@@ -8,7 +8,7 @@ from backend.simple.simple_routes import simple_routes
 from backend.matches.matches_routes import matches
 from backend.users.users_routes import users
 from backend.reports.reports_routes import reports
-
+from backend.chats.chat_routes import chat
 
 
 
@@ -47,6 +47,7 @@ def create_app() -> Flask:
     app.register_blueprint(matches)
     app.register_blueprint(users)
     app.register_blueprint(reports)
+    app.register_blueprint(chat)
 
 
     return app
