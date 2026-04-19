@@ -8,7 +8,7 @@ SideBarLinks()
 st.set_page_config(layout="wide")
 st.title("HuskyBuddy Chat")
 
-BASE_URL = "http://web-api:4000/api"
+BASE_URL = "http://web-api:4000"
 
 current_user_id = 1 # Brandon's  ID
 
