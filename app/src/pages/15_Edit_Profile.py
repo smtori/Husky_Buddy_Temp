@@ -210,7 +210,7 @@ if not st.session_state.show_success_modal:
                         st.info("Please ensure the API server is running.")
 
     if st.button("Cancel", key="page_cancel"):
-        st.switch_page("pages/Home.py")
+        st.switch_page("src/Home.py")
 
 if st.session_state.show_success_modal:
     show_success_dialog()
