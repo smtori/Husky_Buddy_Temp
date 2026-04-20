@@ -12,30 +12,66 @@ SideBarLinks()
 st.title(f"Welcome, {st.session_state['first_name']}.")
 
 first_name = st.session_state.get('first_name', 'Brandon')
-last_name  = st.session_state.get('last_name', 'Smith')
+last_name  = st.session_state.get('last_name', 'Heller')
 
 with st.container(border=True):
     header_left, header_right = st.columns([1, 3], gap="medium")
  
-    with header_left:
-        # Profile picture — placeholder via DiceBear.
-        # Replace the URL with an uploaded/local image path when ready.
+    with header_left: # Profile picture
         st.image(
-            "assets/brandon.svg",
+            f"https://api.dicebear.com/7.x/avataaars/svg?seed={first_name}{last_name}&backgroundColor=c8102e",
             width=200,
         )
  
     with header_right:
-        st.title(f"{first_name} {last_name}")
-        st.caption(f"@{first_name.lower()}{last_name.lower()} · Northeastern University 🐾")
-
+        # Name + verification badge
+        badge = " ✅" if status == "verified" else ""
+        st.title(f"{first_name} {last_name}{badge}")
+        st.caption(f"@{first_name.lower()}{last_name.lower()} · Northeastern University 🐾 · {email}")
+ 
+        # Quick-info row: year + first major
+        info_a, info_b = st.columns([1, 3])
+        info_a.markdown(f"📚 **{year} Year**")
+        if majors:
+            info_b.markdown(f"🎓 **{' · '.join(majors)}**")
+        else:
+            info_b.markdown("🎓 _No major listed_")
+ 
+        # ── Major tags ──
+        st.markdown("**Majors**")
+        if majors:
+            major_cols = st.columns(min(len(majors), 4))
+            for col, m in zip(major_cols, majors):
+                col.button(f"🎓 {m}", disabled=True, use_container_width=True, key=f"maj_{m}")
+        else:
+            st.caption("_No majors added yet. Edit your profile to add some!_")
+ 
+        # ── Interest tags ──
+        st.markdown("**Interests**")
+        if interests:
+            int_cols = st.columns(min(len(interests), 4))
+            for col, i in zip(int_cols, interests):
+                col.button(f"✨ {i}", disabled=True, use_container_width=True, key=f"int_{i}")
+        else:
+            st.caption("_No interests added yet._")
+ 
+        # ── Favorite campus spots ──
+        st.markdown("**Favorite Campus Spots**")
+        if spots:
+            spot_cols = st.columns(min(len(spots), 4))
+            for col, s in zip(spot_cols, spots):
+                col.button(f"📍 {s['spot_name']}", disabled=True,
+                           use_container_width=True, key=f"spot_{s['spot_name']}")
+        else:
+            st.caption("_No favorite spots added yet._")
+ 
+ 
 # --------------------
 with st.container(border=True):
     s1, s2, s3, s4 = st.columns(4)
-    s1.metric("Matches", 12, "+2 this week")
+    s1.metric("Network", 12, "+2 this week")
     s2.metric("Chats", 47, "+5 today")
     s3.metric("Meetups", 8, "+1 this week")
-    s4.metric("Rating", "4.9", "⭐")
  
 st.write("")  # spacer
  # --------------------
@@ -48,18 +84,3 @@ if st.button("💬  HuskyBuddy Chats", type="primary", use_container_width=True)
 if st.button("📝  Submit a Report", use_container_width=True):
         st.switch_page("pages/11_Submit_Report.py")
  
- 
-# if st.button('Edit Profile',
-#              type='primary',
-#              use_container_width=True):
-#         st.switch_page('pages/15_Edit_Profile.py')
-
-# if st.button('View HuskyBuddy Chat',
-#              type='primary',
-#              use_container_width=True):
-#     st.switch_page('pages/14_Brandon_Match_Chat.py')
-
-# if st.button('Submit a Report',
-#              type='primary',
-#              use_container_width=True):
-#     st.switch_page('pages/11_Submit_Report.py')
