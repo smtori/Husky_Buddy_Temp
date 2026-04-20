@@ -13,7 +13,7 @@ if st.button("← Back to Options", type="secondary", use_container_width=False)
 
 BASE_URL = "http://web-api:4000"
 
-current_user_id = 1 # Brandon's  ID
+current_user_id = st.session_state.get('user_id', 1)
 
 # Get a random match
 if "match_id" not in st.session_state:
