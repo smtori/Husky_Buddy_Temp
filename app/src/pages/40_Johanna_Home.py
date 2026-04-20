@@ -33,6 +33,19 @@ def fetch_json(path: str) -> List[Any]:
         raise last_error
     return []
 
+def rate_label(pct: int) -> str:
+    """Return a label for the given percentage value."""
+    if pct >= 80:
+        return "Excellent"
+    elif pct >= 60:
+        return "Good"
+    elif pct >= 40:
+        return "Fair"
+    elif pct >= 20:
+        return "Poor"
+    else:
+        return "Very Poor"
+
 
 def lower_status(df: pd.DataFrame) -> pd.DataFrame:
     """Normalise the 'status' column to lowercase strings."""
