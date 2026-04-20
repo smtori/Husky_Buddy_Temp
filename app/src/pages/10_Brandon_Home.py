@@ -11,6 +11,40 @@ SideBarLinks()
 
 st.title(f"Welcome, {st.session_state['first_name']}.")
 
+BASE_URL = "http://web-api:4000"
+ 
+# Brandon's student_id in 00_husky-buddy.sql
+current_user_id = st.session_state.get('student_id', 1)
+ 
+# Pull profile from api
+@st.cache_data(ttl=30)  # small cache so we don't hammer the API on every rerun
+def load_profile(user_id: int):
+    try:
+        resp = requests.get(f"{BASE_URL}/users/{user_id}/profile", timeout=5)
+        if resp.status_code == 200:
+            return resp.json(), None
+        if resp.status_code == 404:
+            return None, "Profile not found."
+        return None, f"API returned status {resp.status_code}."
+    except requests.exceptions.RequestException as e:
+        return None, f"Could not connect to the API: {e}"
+ 
+profile, err = load_profile(current_user_id)
+ 
+if err or profile is None:
+    st.error(err or "Could not load profile.")
+    st.stop()
+ 
+first_name = profile["first_name"]
+last_name  = profile["last_name"]
+year       = profile["year"]
+email      = profile["email"]
+status     = profile.get("status") or ""
+majors     = profile.get("majors", [])
+interests  = profile.get("interests", [])
+spots      = profile.get("campus_spots", [])
+ 
+# Define variables
 first_name = st.session_state.get('first_name', 'Brandon')
 last_name  = st.session_state.get('last_name', 'Heller')
 
