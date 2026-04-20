@@ -18,7 +18,7 @@ current_user_id = 1 # Brandon's  ID
 # Get a random match
 if "match_id" not in st.session_state:
     st.markdown("Ready to chat with one of your HuskyBuddy matches?")
-    if st.button("Start a random chat!", use_container_width=True):
+    if st.button("Chat with your match!", use_container_width=True):
         try:
             resp = requests.get(f"{BASE_URL}/chat/random/{current_user_id}")
             if resp.status_code == 200:
