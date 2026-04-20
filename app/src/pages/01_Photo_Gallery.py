@@ -12,7 +12,7 @@ BASE_URL = "http://web-api:4000"
 
 current_user_id = st.session_state['user_id']
 
-st.header(f"📸 My HuskyBuddy Photo Gallery")
+st.header(f"My HuskyBuddy Photo Gallery")
 st.write(f"### Hi, {st.session_state['first_name']}.")
 
 # ── Load Photos ─────────────────────────────────────────────
