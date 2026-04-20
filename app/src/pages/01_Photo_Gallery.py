@@ -64,7 +64,7 @@ with st.form("upload_photo_form"):
                     f"{BASE_URL}/users/{current_user_id}/photos",
                     json={
                         "match_id": match_id,
-                        "photo_url": f"https://api.dicebear.com/7.x/avataaars/svg?seed=meetup{match_id}&backgroundColor=c8102e",
+                        "photo_url": "https://api.dicebear.com/9.x/avataaars/svg?eyebrows=default&eyes=default&facialHair[]&mouth=default&seed=Aiden",
                         "caption": caption
                     }
                 )
