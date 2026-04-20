@@ -381,8 +381,8 @@ VALUES
 -- Meetup Photo
 INSERT INTO meetup_photo (match_id, uploaded_by, photo_url, caption, uploaded_at)
 VALUES
-   (1, 1, 'https://huskybuddy.app/photos/marino-meetup-1.jpg', 'First meetup after working out at Marino.', '2026-02-10 17:30:00'),
-   (1, 3, 'https://huskybuddy.app/photos/tatte-chat-1.jpg', 'Grabbed coffee and talked about classes at Tatte.', '2026-02-10 18:15:00');
+   (1, 1, 'https://picsum.photos/seed/husky101/400/300', 'First meetup after working out at Marino.', '2026-02-10 17:30:00'),
+   (1, 3, 'https://picsum.photos/seed/husky102/400/300', 'Grabbed coffee and talked about classes at Tatte.', '2026-02-10 18:15:00');
 
 
 -- Match Feedback
@@ -411,7 +411,3 @@ INSERT INTO moderation_action (admin_id, user_id, report_id, action_type, action
 VALUES
    (1, 3, 1, 'warning issued', '2026-03-01 12:00:00', 'Sent reminder about meetup etiquette and communication expectations.'),
    (2, 2, 2, 'under review', '2026-03-02 16:00:00', 'Reviewed reported profile and requested clarification from the user.');
-
-
-
-

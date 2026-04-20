@@ -228,19 +228,15 @@ def get_user_photos(student_id):
     cursor = get_db().cursor(dictionary=True)
     try:
         cursor.execute("""
-            SELECT mp.photo_id, mp.photo_url, mp.caption, mp.uploaded_at,
-                   u.first_name, u.last_name
-            FROM meetup_photo mp
-            JOIN husky_user u ON mp.uploaded_by = u.student_id
-            WHERE mp.uploaded_by IN (
-                SELECT student2_id FROM husky_match WHERE student1_id = %s
-                UNION
-                SELECT student1_id FROM husky_match WHERE student2_id = %s
-                UNION
-                SELECT %s
-            )
-            ORDER BY mp.uploaded_at DESC
-        """, (student_id, student_id, student_id))
+    SELECT mp.photo_id, mp.photo_url, mp.caption, mp.uploaded_at, u.first_name, u.last_name
+    FROM meetup_photo mp
+    JOIN husky_user u ON mp.uploaded_by = u.student_id
+    WHERE mp.match_id IN (
+        SELECT match_id FROM husky_match 
+        WHERE student1_id = %s OR student2_id = %s
+    )
+    ORDER BY mp.uploaded_at DESC
+""", (student_id, student_id))
         photos = cursor.fetchall()
         return jsonify(photos), 200
     except Error as e:
