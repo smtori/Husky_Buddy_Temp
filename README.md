@@ -123,12 +123,9 @@ running `docker compose`.
    DB_USER=root
    DB_HOST=db
    DB_PORT=3306
-   DB_NAME=huskybuddy
+   DB_NAME=husky-buddy-orig
    MYSQL_ROOT_PASSWORD=your-password-here
    ```
-
-   > ⚠️ **Do not reuse a password from another service** (email, banking, etc.).
-   > This file is local-only, but treat it like any other secret.
 
 3. Save the file. You do **not** need to restart your shell — Docker Compose
    reads it at container-start time.
