@@ -15,7 +15,7 @@ st.title(f"Welcome, {st.session_state['first_name']}.")
 BASE_URL = "http://web-api:4000"
  
 # Natalie's student_id in 00_husky-buddy.sql
-current_user_id = st.session_state.get('student_id', 2)
+current_user_id = st.session_state.get('user_id', 2)
  
 # Pull profile from api
 @st.cache_data(ttl=30)  # small cache so we don't hammer the API on every rerun
