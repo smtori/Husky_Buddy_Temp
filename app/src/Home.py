@@ -84,7 +84,7 @@ with row1_col1:
 
 with row1_col2:
     persona_card(
-        image_url="assets/brandon.svg",
+        image_url="https://api.dicebear.com/7.x/avataaars/svg?seed=brandonheller&backgroundColor=c8102e",
         name="Brandon Heller",
         role="Student User",
         description=(
@@ -103,7 +103,7 @@ row2_col1, row2_col2 = st.columns(2)
 
 with row2_col1:
     persona_card(
-        image_url="assets/natalie.svg",
+        image_url="https://api.dicebear.com/9.x/avataaars/svg?backgroundColor=transparent&accessories[]&accessoriesColor[]&clothing=blazerAndShirt,blazerAndSweater,collarAndSweater,overall,shirtCrewNeck,shirtScoopNeck,shirtVNeck&clothingGraphic[]&eyebrows=default,defaultNatural,flatNatural&eyes=default&facialHair=beardLight,beardMedium,moustacheFancy,moustacheMagnum,beardMajestic&facialHairColor=2c1b18,4a312c,724133&hairColor=2c1b18,4a312c,724133,a55728,b58143,c93305&mouth=default,serious,smile,twinkle&seed=Jessica",
         name="Natalie Frost",
         role="Student User",
         description=(
