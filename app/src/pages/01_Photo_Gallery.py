@@ -38,7 +38,7 @@ else:
     for i, photo in enumerate(photos):
         with cols[i % 3]:
             st.image(
-                f"https://api.dicebear.com/9.x/avataaars/svg?eyebrows=default&eyes=default&facialHair[]&mouth=default&seed=Destiny",
+                f"assets/marino_meetup.webp",
                 use_container_width=True
             )
             st.caption(f"📍 {photo['caption']}")
@@ -64,7 +64,7 @@ with st.form("upload_photo_form"):
                     f"{BASE_URL}/users/{current_user_id}/photos",
                     json={
                         "match_id": match_id,
-                        "photo_url": "https://api.dicebear.com/9.x/avataaars/svg?eyebrows=default&eyes=default&facialHair[]&mouth=default&seed=Aiden",
+                        "photo_url": "assets/tatte_meetup.jpg",
                         "caption": caption
                     }
                 )
