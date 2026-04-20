@@ -54,7 +54,7 @@ with st.container(border=True):
  
     with header_left: # Profile picture
         st.image(
-            f"https://api.dicebear.com/7.x/avataaars/svg?seed={first_name}{last_name}&backgroundColor=c8102e",
+            f"https://api.dicebear.com/9.x/avataaars/svg?eyebrows=default&eyes=default&facialHair[]&mouth=default&seed=Ryker",
             width=200,
         )
  

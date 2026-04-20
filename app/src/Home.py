@@ -84,7 +84,7 @@ with row1_col1:
 
 with row1_col2:
     persona_card(
-        image_url="https://api.dicebear.com/7.x/avataaars/svg?seed=brandonheller&backgroundColor=c8102e",
+        image_url="https://api.dicebear.com/9.x/avataaars/svg?eyebrows=default&eyes=default&facialHair[]&mouth=default&seed=Ryker",
         name="Brandon Heller",
         role="Student User",
         description=(
