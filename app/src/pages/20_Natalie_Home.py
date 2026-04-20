@@ -14,8 +14,8 @@ st.title(f"Welcome, {st.session_state['first_name']}.")
 
 BASE_URL = "http://web-api:4000"
  
-# Brandon's student_id in 00_husky-buddy.sql
-current_user_id = st.session_state.get('student_id', 1)
+# Natalie's student_id in 00_husky-buddy.sql
+current_user_id = st.session_state.get('student_id', 2)
  
 # Pull profile from api
 @st.cache_data(ttl=30)  # small cache so we don't hammer the API on every rerun
@@ -46,8 +46,8 @@ interests  = profile.get("interests", [])
 spots      = profile.get("campus_spots", [])
  
 # Define variables
-first_name = st.session_state.get('first_name', 'Brandon')
-last_name  = st.session_state.get('last_name', 'Heller')
+first_name = st.session_state.get('first_name', 'Natalie')
+last_name  = st.session_state.get('last_name', 'Frost')
 
 with st.container(border=True):
     header_left, header_right = st.columns([1, 3], gap="medium")
@@ -104,9 +104,9 @@ with st.container(border=True):
 # --------------------
 with st.container(border=True):
     s1, s2, s3, s4 = st.columns(4)
-    s1.metric("Network", 12, "+2 this week")
-    s2.metric("Chats", 47, "+5 today")
-    s3.metric("Meetups", 8, "+1 this week")
+    s1.metric("Network", 20, "+1 this week")
+    s2.metric("Chats", 88, "+6 today")
+    s3.metric("Meetups", 20, "+3 this week")
  
 st.write("")  # spacer
  # --------------------

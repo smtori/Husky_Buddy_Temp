@@ -86,7 +86,7 @@ with st.container(border=True):
         if interests:
             int_cols = st.columns(min(len(interests), 4))
             for col, i in zip(int_cols, interests):
-                col.button(f"✨ {i}", disabled=True, use_container_width=True, key=f"int_{i}")
+                col.button(f" {i}", disabled=True, use_container_width=True, key=f"int_{i}")
         else:
             st.caption("_No interests added yet._")
  
