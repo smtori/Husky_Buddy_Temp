@@ -59,14 +59,10 @@ for r in reports_raw:
         'created_at': r.get('created_at', '')
     })
 
-pending_count = sum(1 for r in reports if r['status'] == 'pending')
 active_flags = sum(1 for r in reports if r['status'] == 'flagged')
 
-m1, m2 = st.columns(2)
-with m1:
-    st.metric('Pending Reports', pending_count, border=True)
-with m2:
-    st.metric('Active Flags', active_flags, border=True)
+st.metric('Active Flags', active_flags, border=True)
+
 
 st.write('')
 
