@@ -12,9 +12,6 @@ BASE_URL = "http://web-api:4000"
 
 current_user_id = st.session_state['user_id']
 
-if st.button("← Back to Options", type="secondary", use_container_width=False):
-    st.switch_page('pages/10_Brandon_Home.py')
-    
 st.header(f"My HuskyBuddy Photo Gallery")
 st.write(f"### Hi, {st.session_state['first_name']}.")
 
@@ -40,10 +37,13 @@ else:
     cols = st.columns(3)
     for i, photo in enumerate(photos):
         with cols[i % 3]:
-            st.image(photo["photo_url"], use_container_width=True)
-            st.caption(f" {photo['caption']}")
+            st.image(
+                f"https://api.dicebear.com/7.x/avataaars/svg?seed=meetup{photo['photo_id']}&backgroundColor=c8102e",
+                use_container_width=True
+            )
+            st.caption(f"📍 {photo['caption']}")
             st.write(f"Uploaded by **{photo['first_name']} {photo['last_name']}**")
-            st.write(f" {photo['uploaded_at'][:16]}")
+            st.write(f"🗓️ {photo['uploaded_at'][:16]}")
             st.divider()
 
 # ── Upload New Photo ────────────────────────────────────────
@@ -52,20 +52,19 @@ st.subheader("Upload a New Photo")
 
 with st.form("upload_photo_form"):
     match_id = st.number_input("Match ID", min_value=1, step=1)
-    photo_url = st.text_input("Photo URL")
     caption = st.text_area("Caption")
     submitted = st.form_submit_button("Upload Photo")
 
     if submitted:
-        if not photo_url:
-            st.error("Photo URL is required.")
+        if not caption:
+            st.error("Caption is required.")
         else:
             try:
                 resp = requests.post(
                     f"{BASE_URL}/users/{current_user_id}/photos",
                     json={
                         "match_id": match_id,
-                        "photo_url": photo_url,
+                        "photo_url": f"https://api.dicebear.com/7.x/avataaars/svg?seed=meetup{match_id}&backgroundColor=c8102e",
                         "caption": caption
                     }
                 )
