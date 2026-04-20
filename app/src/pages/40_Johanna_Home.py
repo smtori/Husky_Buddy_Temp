@@ -3,7 +3,7 @@
 import logging
 from typing import Any, List, Optional
 
-import matplotlib.pyplot as plt  # type: ignore[import-untyped]
+import matplotlib.pyplot as plt  # type: ignore[import-not-found]
 import pandas as pd
 import requests  # type: ignore[import-untyped]
 import streamlit as st  # type: ignore[import-not-found]
@@ -15,63 +15,6 @@ logger = logging.getLogger(__name__)
 st.set_page_config(page_title="Analytical Dashboard", layout="wide")
 
 SideBarLinks()
-
-st.markdown("""
-<style>
-[data-testid="metric-container"] {
-    background: #3a3a3a;
-    border-radius: 12px;
-    padding: 16px 20px;
-}
-[data-testid="metric-container"] label {
-    color: #cccccc !important;
-    font-size: 0.8rem !important;
-    font-weight: 600 !important;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-}
-[data-testid="stMetricValue"] {
-    font-size: 2rem !important;
-    font-weight: 800 !important;
-    color: #ffffff !important;
-}
-[data-testid="stMetricDeltaIcon-Up"]   { color: #4CAF50 !important; }
-[data-testid="stMetricDeltaIcon-Down"] { color: #e74c3c !important; }
-
-.meetup-card {
-    border-radius: 14px;
-    padding: 18px 10px;
-    text-align: center;
-}
-.meetup-card .num { font-size: 2.2rem; font-weight: 800; color: #fff; line-height: 1; }
-.meetup-card .lbl { font-size: 0.78rem; color: rgba(255,255,255,0.85); margin-top: 4px; }
-.green-card { background: #4CAF50; }
-.red-card   { background: #e74c3c; }
-
-.rate-badge {
-    display: inline-block;
-    border-radius: 20px;
-    padding: 5px 12px;
-    font-size: 0.8rem;
-    font-weight: 700;
-    color: #fff;
-}
-.badge-green  { background: #4CAF50; }
-.badge-yellow { background: #f0a500; }
-.badge-red    { background: #e74c3c; }
-
-.interest-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 9px 0;
-    border-bottom: 1px solid #444;
-}
-.interest-row:last-child { border-bottom: none; }
-.i-label { font-weight: 600; font-size: 0.88rem; }
-.i-count  { color: #999; font-size: 0.8rem; }
-</style>
-""", unsafe_allow_html=True)
 
 API_BASES = ["http://api:4000", "http://localhost:4000"]
 
@@ -101,13 +44,13 @@ def lower_status(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-def badge_class(rate: int) -> str:
-    """Return the CSS badge class for a given success-rate percentage."""
+def rate_label(rate: int) -> str:
+    """Return an emoji indicator for a given success-rate percentage."""
     if rate >= 75:
-        return "badge-green"
+        return "🟢"
     if rate >= 65:
-        return "badge-yellow"
-    return "badge-red"
+        return "🟡"
+    return "🔴"
 
 
 def render_trend_chart(matches: pd.DataFrame) -> None:
@@ -117,13 +60,13 @@ def render_trend_chart(matches: pd.DataFrame) -> None:
             "Jan", "Feb", "Mar", "Apr", "May", "Jun",
             "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
         ]
-        trend = (
-            matches.dropna(subset=["matched_on"])
-            .assign(Month=lambda d: d["matched_on"].dt.strftime("%b"))
-            .groupby("Month")
-            .size()
-            .reset_index(name="Count")
-        )
+        filtered = matches.dropna(subset=["matched_on"]).copy()
+        filtered["Month"] = filtered["matched_on"].dt.strftime("%b")
+        month_counts = filtered["Month"].value_counts()
+        trend = pd.DataFrame({
+            "Month": month_counts.index,
+            "Count": month_counts.values,
+        })
         trend["Month"] = pd.Categorical(
             trend["Month"], categories=month_order, ordered=True
         )
@@ -151,11 +94,11 @@ def render_trend_chart(matches: pd.DataFrame) -> None:
 def render_demographics_chart(users: pd.DataFrame) -> None:
     """Render the year-of-study demographics pie chart."""
     if not users.empty:
-        demo = (
-            users.groupby("year")
-            .size()
-            .reset_index(name="Users")
-        )
+        year_counts = users["year"].value_counts()
+        demo = pd.DataFrame({
+            "year": year_counts.index,
+            "Users": year_counts.values,
+        })
         colors = [
             "#4b8cf5", "#4CAF50", "#f0a500",
             "#e74c3c", "#9b59b6", "#1abc9c",
@@ -238,35 +181,28 @@ def render_breakdown(matches: pd.DataFrame) -> None:
                 bd["done"] / bd["total"] * 100
             ).round(0).astype(int)
         else:
-            bd = (
-                matches.groupby("status")
-                .size()
-                .reset_index(name="total")
-                .rename(columns={"status": "Category"})
-            )
-            bd["Category"] = bd["Category"].str.title()
+            status_counts = matches["status"].value_counts()
+            bd = pd.DataFrame({
+                "Category": status_counts.index.str.title(),
+                "total": status_counts.values,
+            })
             total_all = max(int(bd["total"].sum()), 1)
             bd["rate"] = (
                 bd["total"] / total_all * 100
             ).round(0).astype(int)
 
         for _, row in bd.iterrows():
-            css = badge_class(int(row["rate"]))
-            st.markdown(
-                f'<div style="display:flex;justify-content:space-between;'
-                f'align-items:center;padding:10px 4px;'
-                f'border-bottom:1px solid #444">'
-                f'<div>'
-                f'<div style="font-weight:600;font-size:0.88rem">'
-                f'{row["Category"]}</div>'
-                f'<div style="color:#888;font-size:0.77rem">'
-                f'{row["total"]} total matches</div>'
-                f'</div>'
-                f'<span class="rate-badge {css}">'
-                f'{row["rate"]}% Success Rate</span>'
-                f'</div>',
-                unsafe_allow_html=True,
-            )
+            pct = int(row["rate"])
+            indicator = rate_label(pct)
+            label_col, rate_col = st.columns([3, 1])
+            with label_col:
+                st.write(f"**{row['Category']}**")
+                st.caption(f"{row['total']} total matches")
+            with rate_col:
+                st.metric(label="", value=f"{pct}%", label_visibility="collapsed")
+                st.caption(indicator)
+            st.progress(pct / 100)
+            st.divider()
     else:
         static_rows = [
             ("CS + CS", 45, 78),
@@ -276,22 +212,16 @@ def render_breakdown(matches: pd.DataFrame) -> None:
             ("Engineering + Business", 68, 61),
         ]
         for category, total, pct in static_rows:
-            css = badge_class(pct)
-            st.markdown(
-                f'<div style="display:flex;justify-content:space-between;'
-                f'align-items:center;padding:10px 4px;'
-                f'border-bottom:1px solid #444">'
-                f'<div>'
-                f'<div style="font-weight:600;font-size:0.88rem">'
-                f'{category}</div>'
-                f'<div style="color:#888;font-size:0.77rem">'
-                f'{total} total matches</div>'
-                f'</div>'
-                f'<span class="rate-badge {css}">'
-                f'{pct}% Success Rate</span>'
-                f'</div>',
-                unsafe_allow_html=True,
-            )
+            indicator = rate_label(pct)
+            label_col, rate_col = st.columns([3, 1])
+            with label_col:
+                st.write(f"**{category}**")
+                st.caption(f"{total} total matches")
+            with rate_col:
+                st.metric(label="", value=f"{pct}%", label_visibility="collapsed")
+                st.caption(indicator)
+            st.progress(pct / 100)
+            st.divider()
 
 
 def render_interests(reports: pd.DataFrame) -> None:
@@ -306,15 +236,11 @@ def render_interests(reports: pd.DataFrame) -> None:
     )
 
     if interest_col:
-        top = (
-            reports.groupby(interest_col)
-            .size()
-            .reset_index(name="count")
-            .rename(columns={interest_col: "Interest"})
-            .sort_values("count", ascending=False)
-            .head(6)
-        )
-        rows = [(str(r["Interest"]), int(r["count"])) for _, r in top.iterrows()]
+        interest_counts = reports[interest_col].value_counts().head(6)
+        rows = [
+            (str(name), int(cnt))
+            for name, cnt in zip(interest_counts.index, interest_counts.values)
+        ]
     else:
         rows = [
             ("Career + Co-ops", 30),
@@ -323,14 +249,13 @@ def render_interests(reports: pd.DataFrame) -> None:
             ("Music", 10),
         ]
 
-    interest_html = "".join(
-        f'<div class="interest-row">'
-        f'<span class="i-label">{name}</span>'
-        f'<span class="i-count">{cnt} total matches</span>'
-        f'</div>'
-        for name, cnt in rows
-    )
-    st.markdown(interest_html, unsafe_allow_html=True)
+    for name, cnt in rows:
+        name_col, count_col = st.columns([3, 1])
+        with name_col:
+            st.write(f"**{name}**")
+        with count_col:
+            st.caption(f"{cnt} matches")
+        st.divider()
 
 
 def main() -> None:
@@ -414,6 +339,7 @@ def main() -> None:
 
     left_col, right_col = st.columns([1, 1], gap="large")
 
+    # ── LEFT ──────────────────────────────────────────────────────────────────
     with left_col:
         col1, col2 = st.columns(2)
         with col1:
@@ -448,37 +374,28 @@ def main() -> None:
             st.markdown("**User Satisfaction Survey Results**")
             render_satisfaction_chart(satisfaction_df)
 
+    # ── RIGHT ─────────────────────────────────────────────────────────────────
     with right_col:
         meet_col1, meet_col2 = st.columns(2)
         with meet_col1:
-            st.markdown(
-                f'<div class="meetup-card green-card">'
-                f'<div class="num">{completed:,}</div>'
-                f'<div class="lbl">successful meet ups</div>'
-                f'</div>',
-                unsafe_allow_html=True,
+            st.metric(
+                label="Successful Meet Ups",
+                value=f"{completed:,}",
+                delta=None,
             )
         with meet_col2:
-            st.markdown(
-                f'<div class="meetup-card red-card">'
-                f'<div class="num">{removed:,}</div>'
-                f'<div class="lbl">no meet ups</div>'
-                f'</div>',
-                unsafe_allow_html=True,
+            st.metric(
+                label="No Meet Ups",
+                value=f"{removed:,}",
+                delta=None,
             )
 
         st.write("")
 
         with st.container(border=True):
-            st.markdown(
-                f'<div style="text-align:center;padding:4px 0">'
-                f'<p style="margin:0;color:#aaa;font-size:0.8rem;'
-                f'font-weight:600;text-transform:uppercase;'
-                f'letter-spacing:.05em">In person meetup rate</p>'
-                f'<p style="margin:0;font-size:2.4rem;font-weight:800;'
-                f'color:#fff">{meetup_rate:.0f}%</p>'
-                f'</div>',
-                unsafe_allow_html=True,
+            st.metric(
+                label="In Person Meetup Rate",
+                value=f"{meetup_rate:.0f}%",
             )
 
         st.write("")
