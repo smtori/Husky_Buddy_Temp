@@ -114,7 +114,7 @@ if st.button("✏️  Edit Profile", type="primary", use_container_width=True):
             st.switch_page("pages/15_Edit_Profile.py")
  
 if st.button("💬  HuskyBuddy Chats", type="primary", use_container_width=True):
-            st.switch_page("pages/14_Brandon_Match_Chat.py")
+            st.switch_page("pages/14_Match_Chat.py")
  
 if st.button("📝  Submit a Report", use_container_width=True):
         st.switch_page("pages/11_Submit_Report.py")
