@@ -26,6 +26,8 @@ if not return_page:
     else:
         return_page = 'pages/10_Brandon_Home.py'
 
+if st.button("← Back to Options", type="secondary", use_container_width=False):
+    st.switch_page('pages/10_Brandon_Home.py')
 st.header(f"My HuskyBuddy Photo Gallery")
 st.write(f"### Hi, {st.session_state['first_name']}.")
 
