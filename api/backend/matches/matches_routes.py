@@ -71,6 +71,62 @@ def get_match(match_id):
         cursor.close()
 
 
+@matches.route("/users/<int:student_id>/matches/previous", methods=["GET"])
+def get_previous_matches(student_id):
+    cursor = get_db().cursor(dictionary=True)
+    try:
+        # Get all previous matches (not active) for the user
+        query = """
+            SELECT 
+                hm.match_id,
+                hm.status,
+                hm.matched_on,
+                CASE 
+                    WHEN hm.student1_id = %s THEN hm.student2_id
+                    ELSE hm.student1_id
+                END AS buddy_id,
+                CASE 
+                    WHEN hm.student1_id = %s THEN CONCAT(u2.first_name, ' ', u2.last_name)
+                    ELSE CONCAT(u1.first_name, ' ', u1.last_name)
+                END AS buddy_name,
+                MAX(m.meetup_date) AS last_activity
+            FROM husky_match hm
+            LEFT JOIN husky_user u1 ON hm.student1_id = u1.student_id
+            LEFT JOIN husky_user u2 ON hm.student2_id = u2.student_id
+            LEFT JOIN meetup m ON hm.match_id = m.match_id
+            WHERE (hm.student1_id = %s OR hm.student2_id = %s)
+            AND hm.status != 'active'
+            GROUP BY hm.match_id, hm.status, hm.matched_on, buddy_id, buddy_name
+            ORDER BY hm.matched_on DESC
+        """
+        cursor.execute(query, (student_id, student_id, student_id, student_id))
+        matches = cursor.fetchall()
+
+        # For each match, get feedback ratings
+        for match in matches:
+            feedback_query = """
+                SELECT rating, comment
+                FROM match_feedback
+                WHERE match_id = %s AND student_id = %s
+            """
+            cursor.execute(feedback_query, (match['match_id'], student_id))
+            feedback = cursor.fetchone()
+            
+            if feedback:
+                match['your_rating'] = feedback['rating']
+                match['your_comment'] = feedback['comment']
+            else:
+                match['your_rating'] = 0
+                match['your_comment'] = None
+
+        return jsonify(matches), 200
+    except Error as e:
+        current_app.logger.error(f"Database error in get_previous_matches: {e}")
+        return jsonify({"error": str(e)}), 500
+    finally:
+        cursor.close()
+
+
 @matches.route("/matches", methods=["POST"])
 def create_match():
     cursor = get_db().cursor(dictionary=True)

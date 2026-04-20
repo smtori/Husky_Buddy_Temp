@@ -121,4 +121,7 @@ if st.button("📝  Submit a Report", use_container_width=True):
         st.switch_page("pages/12_22_Submit_Report.py")
 if st.button('📸  View Photo Gallery', type='primary',use_container_width=True):
     st.switch_page('pages/11_21_Photo_Gallery.py')
+
+if st.button('📜  View Previous Matches', use_container_width=True):
+    st.switch_page('pages/14_21_Previous_Matches.py')
  

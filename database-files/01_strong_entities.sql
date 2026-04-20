@@ -43,19 +43,7 @@ VALUES
   ('Eli', 'Taylor', 'tay.eli@northeastern.edu', '4th', 'unverified'),
   ('Stella', 'Lewis', 'lew.ste@northeastern.edu', '5th', 'verified');
 
-INSERT INTO husky_match (student1_id, student2_id, status, matched_on) VALUES
-  (11,32,'removed','2025-06-20 00:00:00'),
-  (3,20,'active','2025-06-20 00:00:00'),
-  (27,33,'pending','2025-03-21 00:00:00'),
-  (9,33,'removed','2025-12-08 00:00:00'),
-  (13,14,'pending','2025-08-15 00:00:00');
-
 INSERT INTO campus_spot (spot_name, location) VALUES
-  ('Marino Recreation Center','369 Huntington Ave'),
-  ('Snell Library','360 Huntington Ave'),
-  ('Tatte Bakery','360 Huntington Ave'),
-  ('Prudential Center','800 Boylston St'),
-  ('Kigo Kitchen','360 Huntington Ave'),
   ('Curry Student Center','346 Huntington Ave'),
   ('Centennial Common','Northeastern University'),
   ('The Fenway','Northeastern University'),
@@ -86,7 +74,6 @@ INSERT INTO campus_spot (spot_name, location) VALUES
   ('Kariotis Hall','360 Huntington Ave'),
   ('East Village Café','East Village'),
   ('Alumni Pavilion','Northeastern University');
-
 
 -- ===== icebreaker_prompt (35 rows) =====
 INSERT INTO icebreaker_prompt (prompt_text, category) VALUES
@@ -126,12 +113,7 @@ INSERT INTO icebreaker_prompt (prompt_text, category) VALUES
   ('What would your Northeastern highlight reel include?', 'Student Life'),
   ('What is your most unpopular academic opinion?', 'Academics');
 
-
 INSERT INTO admin (name, email, role) VALUES
-  ('Adam Johnson','johnson.ad@northeastern.edu','IT Admin'),
-  ('Johanna Park','park.jo@northeastern.edu','Data Lead'),
   ('Marcus Webb','webb.ma@northeastern.edu','Community Manager'),
   ('Priya Shah','shah.pr@northeastern.edu','Moderation Lead'),
   ('Diane Torres','torres.di@northeastern.edu','Product Manager');
-
-

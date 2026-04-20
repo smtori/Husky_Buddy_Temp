@@ -1,6 +1,6 @@
 USE `husky-buddy-orig`;
 
-INSERT IGNORE INTO student_major_tags (student_id, major_id) VALUES
+INSERT INTO student_major_tags (student_id, major_id) VALUES
   (1,7),
   (1,41),
   (1,73),
@@ -133,14 +133,12 @@ INSERT IGNORE INTO student_major_tags (student_id, major_id) VALUES
   (25,63);
 
 
-INSERT IGNORE INTO student_interest (student_id, interest_id) VALUES
+INSERT INTO student_interest (student_id, interest_id) VALUES
   (1,5),
   (1,4),
   (2,1),
-  (2,3),
   (2,8),
   (2,4),
-  (3,1),
   (3,7),
   (3,2),
   (4,5),
@@ -266,7 +264,7 @@ INSERT IGNORE INTO student_interest (student_id, interest_id) VALUES
   (31,4);
 
 
-INSERT IGNORE INTO student_spots (student_id, spot_id) VALUES
+INSERT INTO student_spots (student_id, spot_id) VALUES
   (1,24),
   (1,23),
   (1,15),
@@ -399,7 +397,7 @@ INSERT IGNORE INTO student_spots (student_id, spot_id) VALUES
   (16,11);
 
 
-INSERT IGNORE INTO match_icebreaker (match_id, prompt_id, shown_at) VALUES
+INSERT INTO match_icebreaker (match_id, prompt_id, shown_at) VALUES
   (1,25,'2025-11-03 00:00:00'),
   (1,13,'2025-11-03 00:05:00'),
   (2,15,'2025-05-08 00:00:00'),
@@ -501,5 +499,3 @@ INSERT IGNORE INTO match_icebreaker (match_id, prompt_id, shown_at) VALUES
   (49,23,'2025-12-03 00:10:00'),
   (50,1,'2025-09-14 00:00:00'),
   (50,8,'2025-09-14 00:05:00');
-
-
