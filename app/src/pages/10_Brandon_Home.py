@@ -4,6 +4,7 @@ import requests
 import streamlit as st
 import requests
 from modules.nav import SideBarLinks
+from typing import Any
  
 st.set_page_config(layout='wide')
 
@@ -19,7 +20,7 @@ current_user_id = st.session_state.get('student_id', 1)
  
 # Pull profile from api
 @st.cache_data(ttl=30)  # small cache so we don't hammer the API on every rerun
-def load_profile(user_id: int):
+def load_profile(user_id: int) -> Any:
     try:
         resp = requests.get(f"{BASE_URL}/users/{user_id}/profile", timeout=5)
         if resp.status_code == 200:

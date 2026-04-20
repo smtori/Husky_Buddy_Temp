@@ -4,6 +4,7 @@ logger = logging.getLogger(__name__)
 import streamlit as st
 import requests
 from modules.nav import SideBarLinks
+from typing import Any
  
 st.set_page_config(layout='wide')
 
@@ -19,7 +20,7 @@ current_user_id = st.session_state.get('user_id', 2)
  
 # Pull profile from api
 @st.cache_data(ttl=30)  # small cache so we don't hammer the API on every rerun
-def load_profile(user_id: int):
+def load_profile(user_id: int) -> Any:
     try:
         resp = requests.get(f"{BASE_URL}/users/{user_id}/profile", timeout=5)
         if resp.status_code == 200:
@@ -96,7 +97,7 @@ with st.container(border=True):
             spot_cols = st.columns(min(len(spots), 4))
             for col, s in zip(spot_cols, spots):
                 col.button(f"📍 {s['spot_name']}", disabled=True,
-                           use_container_width=True, key=f"spot_{s['spot_name']}")
+                    use_container_width=True, key=f"spot_{s['spot_name']}")
         else:
             st.caption("_No favorite spots added yet._")
  
@@ -118,8 +119,6 @@ if st.button("💬  HuskyBuddy Chats", type="primary", use_container_width=True)
  
 if st.button("📝  Submit a Report", use_container_width=True):
         st.switch_page("pages/12_22_Submit_Report.py")
-if st.button('📸  View Photo Gallery',
-             type='primary',
-             use_container_width=True):
+if st.button('📸  View Photo Gallery', type='primary',use_container_width=True):
     st.switch_page('pages/11_21_Photo_Gallery.py')
  
