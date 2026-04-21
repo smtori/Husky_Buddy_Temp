@@ -207,49 +207,6 @@ etc.) — we'll adapt these to Husky Buddy's actual user types (e.g. *Student*,
 
 ---
 
-## Troubleshooting
-
-<details>
-<summary><strong>Streamlit page doesn't update after I edit a file</strong></summary>
-
-Click **Always Rerun** in the top-right menu of the Streamlit browser tab. If
-the container crashed, check Docker Desktop's log panel for the `app`
-container and run `docker compose restart`.
-</details>
-
-<details>
-<summary><strong>MySQL container exits immediately / SQL errors on boot</strong></summary>
-
-Open Docker Desktop → MySQL container → **Logs** tab and search (🔍) for
-`Error`. The most common cause is a syntax error in a `.sql` file. After
-fixing it, run:
-
-```bash
-docker compose down -v && docker compose up -d
-```
-</details>
-
-<details>
-<summary><strong>"Access denied for user 'root'" from the API</strong></summary>
-
-The password in `api/.env` does not match what the DB container was created
-with. Recreate the DB container after confirming the password:
-
-```bash
-docker compose down -v && docker compose up -d
-```
-</details>
-
-<details>
-<summary><strong>Port 3306 / 8501 / 4000 already in use</strong></summary>
-
-Another service on your machine is holding the port. Either stop that service
-or, for local experimentation only, switch to the sandbox config
-(`docker compose -f sandbox.yaml up -d`) which exposes alternate ports.
-</details>
-
----
-
 ## Acknowledgments
 
 - Forked from the [NEU-CS3200/26S-Project-Template](https://github.com/NEU-CS3200/26S-Project-Template) by Dr. Fontenot.
