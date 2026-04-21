@@ -9,6 +9,7 @@ import requests
 import streamlit as st  
 from requests.exceptions import RequestException 
 from modules.nav import SideBarLinks 
+from typing import Any, List, Optional, Union
 
 logger = logging.getLogger(__name__)
 
