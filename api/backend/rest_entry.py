@@ -10,6 +10,7 @@ from backend.users.users_routes import users
 from backend.reports.reports_routes import reports
 from backend.chats.chat_routes import chat
 from backend.analytics.analytics_routes import analytics 
+from backend.campus_spots.campus_spots_routes import campus_spots
 
 
 
@@ -52,5 +53,6 @@ def create_app() -> Flask:
     app.register_blueprint(reports)
     app.register_blueprint(chat)
     app.register_blueprint(analytics)
+    app.register_blueprint(campus_spots)
 
     return app

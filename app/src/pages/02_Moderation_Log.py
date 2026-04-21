@@ -10,7 +10,7 @@ st.set_page_config(page_title='Moderation Log', layout='wide')
 
 SideBarLinks()
 
-st.header("User Account Management")
+st.header("Moderation Logs")
 if st.button("← Back to Admin Home", type="primary", use_container_width=False):
     st.switch_page('pages/00_Admin_Home.py')
 
