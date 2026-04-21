@@ -1,6 +1,7 @@
 import streamlit as st
 import requests
 from modules.nav import SideBarLinks
+from typing import Any
 
 st.set_page_config(layout='wide')
 
@@ -9,8 +10,22 @@ SideBarLinks()
 st.title("Edit Profile")
 st.markdown("Keep your HuskyBuddy profile up to date so we can find you the best matches!")
 
+current_user_id = st.session_state.get('user_id', 1)
+first_name = str(st.session_state.get('first_name', '')).strip().lower()
+return_page = st.session_state.get('match_chat_return_page')
+
+if not return_page:
+    if first_name == 'natalie':
+        return_page = 'pages/20_Natalie_Home.py'
+    elif first_name == 'brandon':
+        return_page = 'pages/10_Brandon_Home.py'
+    elif current_user_id == 2:
+        return_page = 'pages/20_Natalie_Home.py'
+    else:
+        return_page = 'pages/10_Brandon_Home.py'
+
 if st.button("← Back to Options", type="secondary", use_container_width=False):
-    st.switch_page('pages/10_Brandon_Home.py')
+    st.switch_page(return_page)
 
 # ── Session state ──────────────────────────────────────────────────────────────
 if "show_success_modal" not in st.session_state:

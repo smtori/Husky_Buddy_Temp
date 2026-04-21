@@ -24,7 +24,7 @@ else:
     return_page = 'pages/10_Brandon_Home.py'
 
 # Back button
-if st.button("← Back to Home", type="secondary", use_container_width=False):
+if st.button("← Back to Options", type="secondary", use_container_width=False):
     st.switch_page(return_page)
 
 BASE_URL = "http://web-api:4000"
